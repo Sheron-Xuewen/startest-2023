@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
     moonOrbitGroup.add(satellite);  // 将卫星添加到月球轨道组中
 
     // 设置相机位置，确保地球和卫星都在视野中
-    camera.position.z = radius * 3;
+    camera.position.z = radius * 4;
 
     // 定义卫星旋转角度
     let satelliteAngle = 0;

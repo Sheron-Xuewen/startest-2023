@@ -83,18 +83,52 @@ body::after {
 } 
 
 #infoWindow {
-    position: fixed; /* 相对于视口定位，而不是整个页面 */
+    /* 原始样式保持不变 */
+    position: fixed;
     display: none;
     background: rgba(0, 0, 0, 0.75);
     border-radius: 10px;
     padding: 15px 25px 15px 15px;
     color: white;
-    z-index: 11; /* 确保它在其他元素的上面 */
-    max-width: 40vw; /* 视口宽度的 90%，确保窗口不会太大 */
-    max-height: 50vh; /* 视口高度的 90%，同上 */
-    overflow: auto; /* 如果内容过多，允许滚动 */
-    box-sizing: border-box; /* 包括内边距和边框在宽度和高度内 */
+    z-index: 11;
+    max-width: 40vw;
+    max-height: 50vh;
+    overflow: auto;
+    box-sizing: border-box;
 }
+
+/* 电脑端全屏 */
+@media screen and (min-width: 1024px) {
+    #infoWindow {
+        max-width: 40vw; /* 或者你希望的宽度 */
+        max-height: 50vh; /* 或者你希望的高度 */
+    }
+}
+
+/* 电脑端半屏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    #infoWindow {
+        max-width: 60vw; /* 调整宽度为视口宽度的 60% */
+        max-height: 60vh; /* 调整高度为视口高度的 60% */
+    }
+}
+
+/* 手机端横屏 */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    #infoWindow {
+        max-width: 70vw; /* 在较窄的屏幕上增加宽度 */
+        max-height: 60vh; /* 适当增加高度 */
+    }
+}
+
+/* 手机端竖屏 */
+@media screen and (max-width: 767px) and (orientation: portrait) {
+    #infoWindow {
+        max-width: 90vw; /* 在竖屏模式下，使用更大的宽度 */
+        max-height: 80vh; /* 使用更大的高度 */
+    }
+}
+
 
 #closeButton {
     position: absolute;

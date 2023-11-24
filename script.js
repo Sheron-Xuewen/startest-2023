@@ -302,58 +302,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 添加事件监听器（只需要一个）
-    renderer.domElement.addEventListener('mousemove', onMouseMove);
-
-    // 当触摸屏在canvas上移动时的事件处理函数
-    function onTouchMove(event) {
-        touchInput = true; // 标记为触摸输入
+        // 添加事件监听器（只需要一个）
+        renderer.domElement.addEventListener('mousemove', onMouseMove);
     
-        // 计算触摸点的当前位置
-        let currentX = event.touches[0].clientX;
-        let currentY = event.touches[0].clientY;
-    
-        // 如果是第一次触摸，只设置位置，不更新速度
-        if (pointerX === undefined || pointerY === undefined) {
-            pointerX = currentX;
-            pointerY = currentY;
-            return;
+        // 当触摸屏在canvas上移动时的事件处理函数
+        function onTouchMove(event) {
+            touchInput = true;
+            movePointer(event.touches[0].clientX, event.touches[0].clientY, true);
+            event.preventDefault();
         }
     
-        // 计算触摸点的移动量
-        let ox = currentX - pointerX;
-        let oy = currentY - pointerY;
+        // 当鼠标离开canvas时的事件处理函数
+        function onMouseLeave() {
+            pointerX = null;
+            pointerY = null;
+        }
     
-        // 更新速度，基于移动量和滑动方向
-        velocity.tx = ox * scale;
-        velocity.ty = oy * scale;
+        // 初始化和运行动画
+        generate();
+        resize();
+        step();
     
-        // 更新当前触摸点的位置
-        pointerX = currentX;
-        pointerY = currentY;
-    
-        event.preventDefault(); // 阻止默认行为
-    }
-
-
-    
-    // 其他函数（例如movePointer、onMouseMove等）保持不变...
-
-
-
-    // 当鼠标离开canvas时的事件处理函数
-    function onMouseLeave() {
-        pointerX = null;
-        pointerY = null;
-    }
-
-    // 初始化和运行动画
-    generate();
-    resize();
-    step();
-
-    // 窗口大小改变时的事件处理
-    window.onresize = resize;
+        // 窗口大小改变时的事件处理
+        window.onresize = resize;
 
 
 

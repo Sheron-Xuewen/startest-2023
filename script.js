@@ -309,27 +309,32 @@ document.addEventListener('DOMContentLoaded', () => {
     function onTouchMove(event) {
         touchInput = true; // 标记为触摸输入
     
+        // 计算触摸点的当前位置
+        let currentX = event.touches[0].clientX;
+        let currentY = event.touches[0].clientY;
+    
         // 如果是第一次触摸，只设置位置，不更新速度
         if (pointerX === undefined || pointerY === undefined) {
-            pointerX = event.touches[0].clientX;
-            pointerY = event.touches[0].clientY;
+            pointerX = currentX;
+            pointerY = currentY;
             return;
         }
     
         // 计算触摸点的移动量
-        let ox = event.touches[0].clientX - pointerX;
-        let oy = event.touches[0].clientY - pointerY;
+        let ox = currentX - pointerX;
+        let oy = currentY - pointerY;
     
         // 更新速度，基于移动量和滑动方向
         velocity.tx = ox * scale;
         velocity.ty = oy * scale;
     
         // 更新当前触摸点的位置
-        pointerX = event.touches[0].clientX;
-        pointerY = event.touches[0].clientY;
+        pointerX = currentX;
+        pointerY = currentY;
     
         event.preventDefault(); // 阻止默认行为
     }
+
 
     
     // 其他函数（例如movePointer、onMouseMove等）保持不变...

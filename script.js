@@ -308,25 +308,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // 当触摸屏在canvas上移动时的事件处理函数
     function onTouchMove(event) {
         touchInput = true; // 标记为触摸输入
-        if (typeof pointerX === 'number' && typeof pointerY === 'number') {
-            // 计算触摸点的移动量
-            let ox = event.touches[0].clientX - pointerX;
-            let oy = event.touches[0].clientY - pointerY;
-
-            // 更新速度，基于移动量和滑动方向
-            // 仅对触摸输入有效
-            velocity.tx = ox * scale;
-            velocity.ty = oy * scale;
-        }
-
+    
+        // 计算触摸点的移动量
+        let ox = event.touches[0].clientX - pointerX;
+        let oy = event.touches[0].clientY - pointerY;
+    
+        // 更新速度，基于移动量和滑动方向
+        // 仅对触摸输入有效，速度计算基于滑动距离
+        velocity.tx = ox * scale;
+        velocity.ty = oy * scale;
+    
         // 更新当前触摸点的位置
         pointerX = event.touches[0].clientX;
         pointerY = event.touches[0].clientY;
-
+    
         event.preventDefault(); // 阻止默认行为
     }
-
+    
     // 其他函数（例如movePointer、onMouseMove等）保持不变...
+
 
 
     // 当鼠标离开canvas时的事件处理函数

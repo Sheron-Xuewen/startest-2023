@@ -94,9 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         infoWindow.style.top = `${top}px`;
         infoWindow.style.display = 'block';
     }
-    
-    
-    
+     
     // 添加关闭按钮的点击事件监听器
     document.getElementById('closeButton').addEventListener('click', function() {
         document.getElementById('infoWindow').style.display = 'none';
@@ -309,11 +307,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 当触摸屏在canvas上移动时的事件处理函数
     function onTouchMove(event) {
-        touchInput = true;
-        movePointer(event.touches[0].clientX, event.touches[0].clientY, true);
-        event.preventDefault();
+        touchInput = true; // 标记为触摸输入
+        movePointer(event.touches[0].clientX, event.touches[0].clientY); // 使用触摸点坐标
+        event.preventDefault(); // 阻止默认行为
     }
 
+    // 移动指针（仅针对触摸屏）
+    function movePointer(x, y) {
+        if (typeof pointerX === 'number' && typeof pointerY === 'number' && touchInput) {
+            // 计算触摸点的移动量
+            let ox = x - pointerX;
+            let oy = y - pointerY;
+
+            // 更新速度，基于移动量和滑动方向
+            velocity.tx = ox * scale;
+            velocity.ty = oy * scale;
+        }
+
+        // 更新当前触摸点的位置
+        pointerX = x;
+        pointerY = y;
+    }
+
+    // 更新星星的位置和速度
+    function update() {
+        // 应用速度衰减因子
+        velocity.tx *= 0.96;
+        velocity.ty *= 0.96;
+
+        // 平滑过渡到目标速度
+        velocity.x += (velocity.tx - velocity.x) * 0.8;
+        velocity.y += (velocity.ty - velocity.y) * 0.8;
+    }
+    
     // 当鼠标离开canvas时的事件处理函数
     function onMouseLeave() {
         pointerX = null;
